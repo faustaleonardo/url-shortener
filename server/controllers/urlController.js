@@ -1,6 +1,7 @@
-const models = require('../database/models');
 const validUrl = require('valid-url');
 const shortid = require('shortid');
+
+const models = require('../database/models');
 
 exports.getUrl = async (req, res) => {
   const { code } = req.params;
@@ -36,7 +37,7 @@ exports.getUrl = async (req, res) => {
 
 exports.postUrl = async (req, res) => {
   const { url, title } = req.body;
-  const baseUrl = 'http://localhost:5000';
+  const baseUrl = process.env.BASE_URL;
 
   if (!validUrl.isUri(baseUrl))
     return res.status(401).json('Invalid base url!');
@@ -69,4 +70,8 @@ exports.postUrl = async (req, res) => {
     console.log(error);
     return res.status(500).json('Server error!');
   }
+};
+
+exports.getTrack = (req, res) => {
+  return res.status(200).json('You have accessed protected route');
 };

@@ -2,8 +2,10 @@ const express = require('express');
 
 const router = express.Router();
 
-const { getUrl, postUrl } = require('../controllers/urlController');
+const { isLoggedIn } = require('../controllers/authController');
+const { getUrl, getTrack, postUrl } = require('../controllers/urlController');
 
+router.get('/track', isLoggedIn, getTrack); // protect
 router.get('/:code', getUrl);
 router.post('/', postUrl);
 
