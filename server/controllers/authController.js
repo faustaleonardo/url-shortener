@@ -54,7 +54,3 @@ exports.isLoggedIn = (req, res, next) => {
     next();
   })(req, res, next);
 };
-
-exports.getUser = (req, res) => {
-  res.status(200).json(req.user);
-};

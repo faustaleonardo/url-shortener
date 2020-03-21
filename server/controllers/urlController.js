@@ -1,6 +1,7 @@
 const validUrl = require('valid-url');
 const shortid = require('shortid');
 
+const { Sequelize } = require('../database/models');
 const models = require('../database/models');
 
 exports.getUrl = async (req, res) => {
@@ -72,6 +73,25 @@ exports.postUrl = async (req, res) => {
   }
 };
 
-exports.getTrack = (req, res) => {
-  return res.status(200).json('You have accessed protected route');
+exports.getTrack = async (req, res) => {
+  const shorturlId = req.params.urlId;
+
+  const tracks = await models.Track.findAll({
+    where: { shorturlId }
+  });
+
+  return res.status(200).json(tracks);
+};
+
+exports.getHistory = async (req, res) => {
+  const shorturls = await models.Shorturl.findAll({
+    where: { userId: req.user.id }
+  });
+
+  return res.status(200).json(shorturls);
+};
+
+exports.getStats = async (req, res) => {
+  // PENDING
+  return res.status(200).json(result);
 };

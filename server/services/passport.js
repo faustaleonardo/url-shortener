@@ -7,28 +7,6 @@ const { promisify } = require('util');
 
 const models = require('../database/models');
 
-// passport.use(
-//   'signup',
-//   new LocalStrategy(
-//     { usernameField: 'username', passwordField: 'password', session: false },
-//     async (username, password, done) => {
-//       try {
-//         let user = await models.User.findOne({ where: { username } });
-//         if (user)
-//           return done(null, false, {
-//             message: 'Username has been taken!'
-//           });
-
-//         const hashedPassword = await promisify(bcrypt.hash)(password, 10);
-//         user = await models.User.create({ username, password: hashedPassword });
-//         return done(null, user);
-//       } catch (err) {
-//         done(err);
-//       }
-//     }
-//   )
-// );
-
 passport.use(
   'local',
   new LocalStrategy(
