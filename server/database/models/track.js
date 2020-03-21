@@ -5,13 +5,14 @@ module.exports = (sequelize, DataTypes) => {
     {
       shorturlId: DataTypes.STRING,
       ipAddress: DataTypes.STRING,
-      referrelUrl: DataTypes.STRING
+      refererUrl: DataTypes.STRING
     },
     {}
   );
   Track.associate = function(models) {
     Track.belongsTo(models.Shorturl, {
       foreignKey: 'shorturlId',
+      targetKey: 'id',
       as: 'shorturl'
     });
   };

@@ -14,11 +14,15 @@ module.exports = {
       urlCode: {
         type: Sequelize.STRING
       },
-      shorturl: {
+      shortUrl: {
         type: Sequelize.STRING
       },
       url: {
         type: Sequelize.STRING
+      },
+      clicks: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
       },
       userId: {
         type: Sequelize.INTEGER,

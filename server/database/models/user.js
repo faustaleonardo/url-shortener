@@ -9,7 +9,11 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
   User.associate = function(models) {
-    User.hasMany(models.Shorturl, { as: 'shorturls' });
+    User.hasMany(models.Shorturl, {
+      as: 'shorturls',
+      foreignKey: 'id',
+      targetKey: 'userId'
+    });
   };
   return User;
 };

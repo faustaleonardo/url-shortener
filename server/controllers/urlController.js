@@ -5,11 +5,33 @@ const shortid = require('shortid');
 exports.getUrl = async (req, res) => {
   const { code } = req.params;
 
-  const item = await models.Shorturl.findOne({ where: { urlCode: code } });
+  const shortUrl = await models.Shorturl.findOne({ where: { urlCode: code } });
 
-  if (!item) return res.status(404).json('Url code not found!');
+  if (!shortUrl) return res.status(404).json('Url code not found!');
 
-  return res.redirect(item.url);
+  const { ip } = req.ipInfo;
+  const refererUrl = req.headers.referer;
+
+  shortUrl.clicks += 1;
+  await shortUrl.save();
+
+  if (refererUrl) {
+    const track = await models.Track.findOne({
+      where: { ipAddress: ip, refererUrl }
+    });
+    if (track) {
+      track.updatedAt = new Date();
+      await track.save();
+    } else {
+      await models.Track.create({
+        ipAddress: ip,
+        refererUrl,
+        shorturlId: shortUrl.id
+      });
+    }
+  }
+
+  return res.redirect(shortUrl.url);
 };
 
 exports.postUrl = async (req, res) => {
@@ -24,12 +46,12 @@ exports.postUrl = async (req, res) => {
   try {
     let item = await models.Shorturl.findOne({ where: { url } });
 
-    if (item) return json.status(200).json(item);
+    if (item) return res.status(200).json(item);
 
     const urlCode = shortid.generate();
     const shortUrl = `${baseUrl}/${urlCode}`;
 
-    // CHANGE THIS AFTER IMPLEMENT AUTHENTICATION
+    // CHANGE TO AUTH USER
     const userId = 1;
 
     item = await models.Shorturl.create({

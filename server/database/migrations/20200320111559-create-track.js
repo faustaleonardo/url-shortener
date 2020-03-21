@@ -19,7 +19,7 @@ module.exports = {
       ipAddress: {
         type: Sequelize.STRING
       },
-      referrelUrl: {
+      refererUrl: {
         type: Sequelize.STRING
       },
       createdAt: {

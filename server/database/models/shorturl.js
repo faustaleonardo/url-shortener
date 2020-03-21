@@ -7,12 +7,17 @@ module.exports = (sequelize, DataTypes) => {
       urlCode: DataTypes.STRING,
       shortUrl: DataTypes.STRING,
       url: DataTypes.STRING,
+      clicks: DataTypes.INTEGER,
       userId: DataTypes.INTEGER
     },
     {}
   );
   Shorturl.associate = function(models) {
-    Shorturl.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
+    Shorturl.belongsTo(models.User, {
+      foreignKey: 'userId',
+      targetKey: 'id',
+      as: 'user'
+    });
   };
   return Shorturl;
 };

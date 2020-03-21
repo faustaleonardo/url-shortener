@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const expressIp = require('express-ip');
 const { sequelize } = require('./database/models');
 
 const app = express();
@@ -9,6 +10,7 @@ const port = 5000;
 
 app.use(morgan('combined'));
 app.use(express.json());
+app.use(expressIp().getIpInfoMiddleware);
 
 app.use('/api/v1/urls', urlRoutes);
 
