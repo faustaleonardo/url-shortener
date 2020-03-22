@@ -9,12 +9,15 @@
   transform: translate(-50%, -50%);
 }
 .link {
-  text-decoration: underline;
+  text-decoration: none;
   color: blue;
 }
 .link:hover {
-  text-decoration: none;
+  text-decoration: underline;
 }
 .text-align-left {
   text-align: left;
+}
+.text-align-center {
+  text-align: center;
 }

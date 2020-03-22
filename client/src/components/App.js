@@ -7,6 +7,8 @@ import Landing from './Landing';
 import Header from './Header';
 import Login from './Login';
 import Signup from './Signup';
+import History from './History';
+import Track from './Track';
 
 class App extends Component {
   componentDidMount() {
@@ -21,7 +23,9 @@ class App extends Component {
             <Header />
             <Route exact path="/" component={Landing}></Route>
             <Route exact path="/login" component={Login}></Route>
-            <Route exact path="/Signup" component={Signup}></Route>
+            <Route exact path="/signup" component={Signup}></Route>
+            <Route exact path="/history" component={History}></Route>
+            <Route exact path="/track/:urlId" component={Track}></Route>
           </div>
         </BrowserRouter>
       </div>

@@ -4,6 +4,8 @@ import {
   LOGIN,
   SIGNUP,
   POST_URL,
+  GET_HISTORY,
+  GET_TRACK,
   GET_ERROR,
   CLEAR_ERROR
 } from './types';
@@ -34,12 +36,22 @@ export const signup = data => postUser('/api/auth/signup', data, SIGNUP);
 /** URL */
 export const postUrl = data => async dispatch => {
   try {
-    const response = await axios.post('api/', data);
+    const response = await axios.post('/api/', data);
 
     dispatch({ type: POST_URL, payload: response.data.data.item });
   } catch (err) {
     dispatch({ type: GET_ERROR, payload: err.response.data.message });
   }
+};
+
+export const getHistory = () => async dispatch => {
+  const response = await axios.get('/api/history');
+  dispatch({ type: GET_HISTORY, payload: response.data.data.shorturls });
+};
+
+export const getTrack = urlId => async dispatch => {
+  const response = await axios.get(`/api/track/${urlId}`);
+  dispatch({ type: GET_TRACK, payload: response.data.data.tracks });
 };
 
 /** Error */
