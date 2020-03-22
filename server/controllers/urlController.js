@@ -22,7 +22,7 @@ exports.getUrl = async (req, res) => {
 
   if (refererUrl) {
     const track = await models.Track.findOne({
-      where: { ipAddress: ip, refererUrl }
+      where: { ipAddress: ip, refererUrl, shorturlId: shortUrl.id }
     });
     if (track) {
       track.updatedAt = new Date();
@@ -82,6 +82,36 @@ exports.postUrl = async (req, res) => {
       createdAt: new Date(),
       updatedAt: new Date()
     });
+
+    return res.status(200).json({
+      status: 'success',
+      data: {
+        item
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      status: 'fail',
+      message: 'Server error!'
+    });
+  }
+};
+
+exports.patchUrl = async (req, res) => {
+  const { urlId } = req.params;
+  const { customUrlCode } = req.body;
+
+  try {
+    let item = await models.Shorturl.findByPk(urlId);
+
+    const baseUrl = process.env.BASE_URL;
+    const shortUrl = `${baseUrl}/api/${customUrlCode}`;
+    const urlCode = customUrlCode;
+
+    item.urlCode = urlCode;
+    item.shortUrl = shortUrl;
+    await item.save();
 
     return res.status(200).json({
       status: 'success',

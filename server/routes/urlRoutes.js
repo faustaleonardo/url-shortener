@@ -8,7 +8,8 @@ const {
   getStats,
   getTrack,
   getHistory,
-  postUrl
+  postUrl,
+  patchUrl
 } = require('../controllers/urlController');
 
 router.get('/track/:urlId', requireLogin, getTrack);
@@ -16,5 +17,6 @@ router.get('/history', requireLogin, getHistory);
 router.get('/stats', requireLogin, getStats);
 router.get('/:code', getUrl);
 router.post('/', postUrl);
+router.patch('/:urlId', patchUrl);
 
 module.exports = router;

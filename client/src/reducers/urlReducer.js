@@ -2,7 +2,7 @@ export default (state = {}, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case 'post_url':
+    case 'get_url':
       return payload;
     default:
       return state;

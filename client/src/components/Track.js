@@ -35,7 +35,7 @@ class Track extends Component {
           <h3 className="mb-5">No record yet :(</h3>
           <Link
             to="/history"
-            class="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+            className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
           >
             Back
           </Link>
@@ -55,7 +55,7 @@ class Track extends Component {
         </table>
         <Link
           to="/history"
-          class="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
         >
           Back
         </Link>

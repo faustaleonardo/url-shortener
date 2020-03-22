@@ -3,7 +3,7 @@ import {
   FETCH_USER,
   LOGIN,
   SIGNUP,
-  POST_URL,
+  GET_URL,
   GET_HISTORY,
   GET_TRACK,
   GET_ERROR,
@@ -38,7 +38,17 @@ export const postUrl = data => async dispatch => {
   try {
     const response = await axios.post('/api/', data);
 
-    dispatch({ type: POST_URL, payload: response.data.data.item });
+    dispatch({ type: GET_URL, payload: response.data.data.item });
+  } catch (err) {
+    dispatch({ type: GET_ERROR, payload: err.response.data.message });
+  }
+};
+
+export const patchUrl = (urlId, data) => async dispatch => {
+  try {
+    const response = await axios.patch(`/api/${urlId}`, data);
+
+    dispatch({ type: GET_URL, payload: response.data.data.item });
   } catch (err) {
     dispatch({ type: GET_ERROR, payload: err.response.data.message });
   }
