@@ -6,10 +6,8 @@ import { Link, Redirect } from 'react-router-dom';
 
 class Track extends Component {
   componentDidMount() {
-    if (this.props.auth) {
-      const { urlId } = this.props.match.params;
-      this.props.getTrack(urlId);
-    }
+    const { urlId } = this.props.match.params;
+    this.props.getTrack(urlId);
   }
 
   renderContent() {
@@ -69,8 +67,8 @@ class Track extends Component {
   }
 }
 
-const mapStateToProps = ({ track }) => {
-  return { track };
+const mapStateToProps = ({ track, auth }) => {
+  return { track, auth };
 };
 
 export default connect(mapStateToProps, actions)(Track);

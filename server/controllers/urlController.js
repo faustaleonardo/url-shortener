@@ -1,7 +1,9 @@
 const validUrl = require('valid-url');
 const shortid = require('shortid');
 
+const { QueryTypes } = require('sequelize');
 const models = require('../database/models');
+const { sequelize } = require('../database/models');
 
 exports.getUrl = async (req, res) => {
   const { code } = req.params;
@@ -157,7 +159,15 @@ exports.getHistory = async (req, res) => {
 };
 
 exports.getStats = async (req, res) => {
-  // PENDING
+  const { group } = req.query;
+
+  console.log(group);
+
+  const result = await sequelize.query(
+    `select extract(${group} from "createdAt") as created_month, count(*) from public."Shorturls" where "userId"=${req.user.id} group by created_month order by created_month`,
+    { type: QueryTypes.SELECT }
+  );
+
   return res.status(200).json({
     status: 'success',
     data: {

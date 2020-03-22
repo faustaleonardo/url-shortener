@@ -5,7 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 
 class History extends Component {
   componentDidMount() {
-    if (this.props.auth) this.props.getHistory();
+    this.props.getHistory();
   }
 
   renderContent() {
@@ -39,7 +39,7 @@ class History extends Component {
   }
 
   render() {
-    if (!this.props.auth) {
+    if (this.props.auth === false) {
       return <Redirect to="/login" />;
     }
 
