@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 class History extends Component {
   componentDidMount() {
-    this.props.getHistory();
+    if (this.props.auth) this.props.getHistory();
   }
 
   renderContent() {
@@ -27,7 +27,7 @@ class History extends Component {
           <td className="border px-4 py-2">{el.clicks}</td>
           <td className="border px-4 py-2">
             <Link
-              to={'/track/' + el.id}
+              to={'/tracks/' + el.id}
               className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
             >
               Show
@@ -39,12 +39,17 @@ class History extends Component {
   }
 
   render() {
-    if (!this.props.history.length)
+    if (!this.props.auth) {
+      return <Redirect to="/login" />;
+    }
+
+    if (!this.props.history.length) {
       return (
         <div className="text-xl center-vh">
           <h3>No record yet :)</h3>
         </div>
       );
+    }
 
     return (
       <div className="center-vh">
@@ -64,8 +69,8 @@ class History extends Component {
   }
 }
 
-const mapStateToProps = ({ history }) => {
-  return { history };
+const mapStateToProps = ({ history, auth }) => {
+  return { history, auth };
 };
 
 export default connect(mapStateToProps, actions)(History);

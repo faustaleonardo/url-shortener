@@ -12,7 +12,7 @@ const {
   patchUrl
 } = require('../controllers/urlController');
 
-router.get('/track/:urlId', requireLogin, getTrack);
+router.get('/tracks/:urlId', requireLogin, getTrack);
 router.get('/history', requireLogin, getHistory);
 router.get('/stats', requireLogin, getStats);
 router.get('/:code', getUrl);

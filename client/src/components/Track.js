@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 class Track extends Component {
   componentDidMount() {
-    const { urlId } = this.props.match.params;
-
-    this.props.getTrack(urlId);
+    if (this.props.auth) {
+      const { urlId } = this.props.match.params;
+      this.props.getTrack(urlId);
+    }
   }
 
   renderContent() {
@@ -29,6 +30,10 @@ class Track extends Component {
   }
 
   render() {
+    if (!this.props.auth) {
+      return <Redirect to="/login" />;
+    }
+
     if (!this.props.track.length)
       return (
         <div className="text-xl center-vh text-align-center">

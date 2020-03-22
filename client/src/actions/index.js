@@ -60,7 +60,7 @@ export const getHistory = () => async dispatch => {
 };
 
 export const getTrack = urlId => async dispatch => {
-  const response = await axios.get(`/api/track/${urlId}`);
+  const response = await axios.get(`/api/tracks/${urlId}`);
   dispatch({ type: GET_TRACK, payload: response.data.data.tracks });
 };
 
