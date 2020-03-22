@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import showAlert from '../utils/showAlert';
@@ -38,6 +39,10 @@ class Signup extends Component {
   };
 
   render() {
+    if (this.props.auth !== false && this.props.auth !== undefined) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <div className="w-full max-w-xs center-vh">
         <form
