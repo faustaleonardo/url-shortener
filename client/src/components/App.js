@@ -9,6 +9,7 @@ import Login from './Login';
 import Signup from './Signup';
 import History from './History';
 import Track from './Track';
+import Stats from './Stats';
 
 class App extends Component {
   componentDidMount() {
@@ -26,6 +27,7 @@ class App extends Component {
             <Route exact path="/signup" component={Signup}></Route>
             <Route exact path="/history" component={History}></Route>
             <Route exact path="/tracks/:urlId" component={Track}></Route>
+            <Route exact path="/stats" component={Stats}></Route>
           </div>
         </BrowserRouter>
       </div>
