@@ -6,6 +6,7 @@ const router = express.Router();
 const {
   login,
   signup,
+  logout,
   error,
   getUser
 } = require('../controllers/authController');
@@ -13,10 +14,11 @@ const {
 router.post('/signup', signup);
 router.post(
   '/login',
-  passport.authenticate('local', { failureRedirect: '/auth/error' }),
+  passport.authenticate('local', { failureRedirect: '/api/auth/error' }),
   login
 );
-router.get('/current_user', getUser);
+router.get('/user', getUser);
+router.get('/logout', logout);
 
 router.get('/error', error);
 

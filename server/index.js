@@ -28,8 +28,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/auth', authRoutes);
-app.use('/', urlRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/', urlRoutes);
 
 sequelize.sync().then(() => {
   app.listen(port, () => {

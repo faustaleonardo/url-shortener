@@ -8,7 +8,11 @@ exports.getUrl = async (req, res) => {
 
   const shortUrl = await models.Shorturl.findOne({ where: { urlCode: code } });
 
-  if (!shortUrl) return res.status(404).json('Url code not found!');
+  if (!shortUrl)
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Url code not found!'
+    });
 
   const { ip } = req.ipInfo;
   const refererUrl = req.headers.referer;
@@ -40,9 +44,16 @@ exports.postUrl = async (req, res) => {
   const baseUrl = process.env.BASE_URL;
 
   if (!validUrl.isUri(baseUrl))
-    return res.status(401).json('Invalid base url!');
+    return res.status(401).json({
+      status: 'fail',
+      message: 'Invalid base url!'
+    });
 
-  if (!validUrl.isUri(url)) return res.status(401).json('Invalid long url!');
+  if (!validUrl.isUri(url))
+    return res.status(401).json({
+      status: 'fail',
+      message: 'Invalid long url!'
+    });
 
   try {
     let item = await models.Shorturl.findOne({ where: { url } });
@@ -65,10 +76,18 @@ exports.postUrl = async (req, res) => {
       updatedAt: new Date()
     });
 
-    return res.status(200).json(item);
+    return res.status(200).json({
+      status: 'success',
+      data: {
+        item
+      }
+    });
   } catch (error) {
     console.log(error);
-    return res.status(500).json('Server error!');
+    return res.status(500).json({
+      status: 'fail',
+      message: 'Server error!'
+    });
   }
 };
 
@@ -79,7 +98,12 @@ exports.getTrack = async (req, res) => {
     where: { shorturlId }
   });
 
-  return res.status(200).json(tracks);
+  return res.status(200).json({
+    status: 'success',
+    data: {
+      tracks
+    }
+  });
 };
 
 exports.getHistory = async (req, res) => {
@@ -87,10 +111,20 @@ exports.getHistory = async (req, res) => {
     where: { userId: req.user.id }
   });
 
-  return res.status(200).json(shorturls);
+  return res.status(200).json({
+    status: 'success',
+    data: {
+      shorturls
+    }
+  });
 };
 
 exports.getStats = async (req, res) => {
   // PENDING
-  return res.status(200).json(result);
+  return res.status(200).json({
+    status: 'success',
+    data: {
+      result
+    }
+  });
 };
