@@ -1,7 +1,6 @@
 const validUrl = require('valid-url');
 const shortid = require('shortid');
 
-const { Sequelize } = require('../database/models');
 const models = require('../database/models');
 
 exports.getUrl = async (req, res) => {

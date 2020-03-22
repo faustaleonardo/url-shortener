@@ -1,56 +1,29 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const JWTStrategy = require('passport-jwt').Strategy;
-const ExtractJWT = require('passport-jwt').ExtractJwt;
 const bcrypt = require('bcryptjs');
 const { promisify } = require('util');
 
 const models = require('../database/models');
 
-passport.use(
-  'local',
-  new LocalStrategy(
-    { usernameField: 'username', passwordField: 'password', session: false },
-    async (username, password, done) => {
-      try {
-        let user = await models.User.findOne({ where: { username } });
-        if (!user)
-          return done(null, false, {
-            message: 'Username not found!'
-          });
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
 
-        const result = await promisify(bcrypt.compare)(password, user.password);
-        if (!result)
-          return done(null, false, {
-            message: 'Username or password is incorrect!'
-          });
-
-        return done(null, user);
-      } catch (err) {
-        done(err);
-      }
-    }
-  )
-);
-
-const opts = {
-  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.JWT_SECRET_KEY
-};
+passport.deserializeUser(async (id, done) => {
+  const user = await models.User.findByPk(id);
+  done(null, user);
+});
 
 passport.use(
-  'jwt',
-  new JWTStrategy(opts, async ({ id }, done) => {
+  new LocalStrategy(async (username, password, done) => {
     try {
-      const user = await models.User.findOne({
-        where: { username: id }
-      });
-      if (!user)
-        done(null, false, {
-          message: 'User not found'
-        });
+      let user = await models.User.findOne({ where: { username } });
+      if (!user) return done(null, false);
 
-      done(null, user);
+      const result = await promisify(bcrypt.compare)(password, user.password);
+      if (!result) return done(null, false);
+
+      return done(null, user);
     } catch (err) {
       done(err);
     }

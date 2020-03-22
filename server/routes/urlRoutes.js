@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const { isLoggedIn } = require('../controllers/authController');
+const requireLogin = require('../middlewares/requireLogin');
 const {
   getUrl,
   getStats,
@@ -11,9 +11,9 @@ const {
   postUrl
 } = require('../controllers/urlController');
 
-router.get('/track/:urlId', isLoggedIn, getTrack);
-router.get('/history', isLoggedIn, getHistory);
-router.get('/stats', isLoggedIn, getStats);
+router.get('/track/:urlId', requireLogin, getTrack);
+router.get('/history', requireLogin, getHistory);
+router.get('/stats', requireLogin, getStats);
 router.get('/:code', getUrl);
 router.post('/', postUrl);
 

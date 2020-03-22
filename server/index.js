@@ -3,7 +3,7 @@ const morgan = require('morgan');
 const expressIp = require('express-ip');
 const cors = require('cors');
 const passport = require('passport');
-const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
 const { sequelize } = require('./database/models');
 
 const app = express();
@@ -19,8 +19,14 @@ app.use(cors());
 app.use(morgan('combined'));
 app.use(express.json());
 app.use(expressIp().getIpInfoMiddleware);
-app.use(cookieParser());
+app.use(
+  cookieSession({
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    keys: [process.env.COOKIE_KEY]
+  })
+);
 app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/auth', authRoutes);
 app.use('/', urlRoutes);
