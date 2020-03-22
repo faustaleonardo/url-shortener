@@ -1,5 +1,5 @@
 .landing-section {
-  width: 50rem;
+  width: 60rem;
 }
 .center-vh {
   margin: 0;
@@ -7,4 +7,14 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.link {
+  text-decoration: underline;
+  color: blue;
+}
+.link:hover {
+  text-decoration: none;
+}
+.text-align-left {
+  text-align: left;
 }

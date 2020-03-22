@@ -3,7 +3,6 @@ module.exports = (sequelize, DataTypes) => {
   const Shorturl = sequelize.define(
     'Shorturl',
     {
-      title: DataTypes.STRING,
       urlCode: DataTypes.STRING,
       shortUrl: DataTypes.STRING,
       url: DataTypes.STRING,

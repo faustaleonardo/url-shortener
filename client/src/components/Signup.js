@@ -28,7 +28,6 @@ class Signup extends Component {
 
     await this.props.signup(this.state);
 
-    console.log(this.props.error);
     if (this.props.error) {
       showAlert('error', 'Oops...', this.props.error);
       this.props.clearError();

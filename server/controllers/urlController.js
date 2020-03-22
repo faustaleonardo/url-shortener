@@ -40,7 +40,7 @@ exports.getUrl = async (req, res) => {
 };
 
 exports.postUrl = async (req, res) => {
-  const { url, title } = req.body;
+  const { url } = req.body;
   const baseUrl = process.env.BASE_URL;
 
   if (!validUrl.isUri(baseUrl))
@@ -58,16 +58,23 @@ exports.postUrl = async (req, res) => {
   try {
     let item = await models.Shorturl.findOne({ where: { url } });
 
-    if (item) return res.status(200).json(item);
+    if (item) {
+      return res.status(200).json({
+        status: 'success',
+        data: {
+          item
+        }
+      });
+    }
 
     const urlCode = shortid.generate();
-    const shortUrl = `${baseUrl}/${urlCode}`;
+    const shortUrl = `${baseUrl}/api/${urlCode}`;
 
-    // CHANGE TO AUTH USER
-    const userId = 1;
+    // 1 indicates anonymous
+    let userId = 1;
+    if (req.user) userId = req.user.id;
 
     item = await models.Shorturl.create({
-      title,
       urlCode,
       shortUrl,
       url,

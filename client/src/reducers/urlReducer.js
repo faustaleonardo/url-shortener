@@ -1,5 +1,9 @@
-export default (state = null, action) => {
-  switch (action.type) {
+export default (state = {}, action) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case 'post_url':
+      return payload;
     default:
       return state;
   }
