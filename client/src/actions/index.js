@@ -6,6 +6,7 @@ import {
   GET_URL,
   GET_HISTORY,
   GET_TRACK,
+  GET_STATS,
   GET_ERROR,
   CLEAR_ERROR
 } from './types';
@@ -62,6 +63,11 @@ export const getHistory = () => async dispatch => {
 export const getTrack = urlId => async dispatch => {
   const response = await axios.get(`/api/tracks/${urlId}`);
   dispatch({ type: GET_TRACK, payload: response.data.data.tracks });
+};
+
+export const getStats = groupBy => async dispatch => {
+  const response = await axios.get(`/api/stats?group=${groupBy}`);
+  dispatch({ type: GET_STATS, payload: response.data.data.result });
 };
 
 /** Error */

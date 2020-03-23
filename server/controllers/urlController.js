@@ -161,10 +161,8 @@ exports.getHistory = async (req, res) => {
 exports.getStats = async (req, res) => {
   const { group } = req.query;
 
-  console.log(group);
-
   const result = await sequelize.query(
-    `select extract(${group} from "createdAt") as created_month, count(*) from public."Shorturls" where "userId"=${req.user.id} group by created_month order by created_month`,
+    `select extract(${group} from "createdAt") as group_by, count(*) from public."Shorturls" where "userId"=${req.user.id} group by group_by order by group_by`,
     { type: QueryTypes.SELECT }
   );
 

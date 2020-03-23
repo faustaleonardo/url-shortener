@@ -28,9 +28,7 @@ class Track extends Component {
   }
 
   render() {
-    if (!this.props.auth) {
-      return <Redirect to="/login" />;
-    }
+    if (!this.props.auth) return <Redirect to="/login" />;
 
     if (!this.props.track.length)
       return (

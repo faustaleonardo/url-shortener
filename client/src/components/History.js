@@ -39,9 +39,7 @@ class History extends Component {
   }
 
   render() {
-    if (this.props.auth === false) {
-      return <Redirect to="/login" />;
-    }
+    if (this.props.auth === false) return <Redirect to="/login" />;
 
     if (!this.props.history.length) {
       return (
