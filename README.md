@@ -6,7 +6,9 @@
 $ npm i -g sequelize-cli
 ```
 
-### Rename .env.example to .env file and set up your database configuration
+### Set up Database Configuration
+
+Rename .env.example and .env and configure your database
 
 ### Install the dependencies for both client and server
 
