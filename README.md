@@ -8,7 +8,7 @@ $ npm i -g sequelize-cli
 
 ### Set up Database Configuration
 
-Rename .env.example and .env and configure your database
+Rename .env.example to .env and configure your database
 
 ### Install the dependencies for both client and server
 
@@ -46,11 +46,13 @@ $ npm run start
 
 To capture public ip address correctly, you need to use a tunnel. For instance, [Ngrok](https://ngrok.com/).
 
+1. Run Ngrok
+
 ```
 $ ./ngrok http 5000
 
 ```
 
-And change the BASEURL in your .env file into the url that Ngrok gives to you.
+2. Change the BASEURL in your .env file into the url that Ngrok gives to you
 
 If you prefer to just user localhost, that is totally fine. Just the downside is the public ip address you capture will always be ::1, which is a normal behaviour.
