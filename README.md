@@ -55,4 +55,4 @@ $ ./ngrok http 5000
 
 2. Change the BASEURL in your .env file into the url that Ngrok gives to you
 
-If you prefer to just user localhost, that is totally fine. Just the downside is the public ip address you capture will always be ::1, which is a normal behaviour.
+If you prefer to use the localhost, that is totally fine as well. Just the downside is the public ip address you capture will always be ::1, which is a normal behaviour.
