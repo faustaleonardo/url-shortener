@@ -42,4 +42,4 @@ $ npm run start
 
 ### Important Note
 
-To capture public ip address correctly, you need to use a tunnel. For instance: [Ngrok](https://ngrok.com/). Then change the BASEURL in your .env file into url Ngrok give you.
+To capture public ip address correctly, you need to use a tunnel. For instance, [Ngrok](https://ngrok.com/). Then change the BASEURL in your .env file into the url that Ngrok gives to you. Otherwise the public ip address you capture will always be ::1 which is a normal behaviour.
