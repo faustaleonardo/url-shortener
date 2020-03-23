@@ -35,7 +35,7 @@ class Signup extends Component {
       return;
     }
 
-    this.props.history.push('/');
+    window.location.href = '/';
   };
 
   render() {
