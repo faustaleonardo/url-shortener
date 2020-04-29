@@ -1,5 +1,4 @@
 const express = require('express');
-const morgan = require('morgan');
 const expressIp = require('express-ip');
 const cors = require('cors');
 const passport = require('passport');
@@ -13,12 +12,13 @@ const authRoutes = require('./routes/authRoutes');
 require('dotenv').config();
 require('./services/passport');
 
-app.use(cors());
 if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('combined'));
+  app.use(require('morgan'));
 }
-app.use(express.json());
 app.use(expressIp().getIpInfoMiddleware);
+
+app.use(express.json());
+app.use(cors());
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
