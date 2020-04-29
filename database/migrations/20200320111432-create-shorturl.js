@@ -6,40 +6,40 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       urlCode: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       shortUrl: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       url: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT,
       },
       clicks: {
         type: Sequelize.INTEGER,
-        defaultValue: 0
+        defaultValue: 0,
       },
       userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'Users',
-          key: 'id'
-        }
+          key: 'id',
+        },
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('Shorturls');
-  }
+  },
 };
