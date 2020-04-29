@@ -14,7 +14,7 @@ require('dotenv').config();
 require('./services/passport');
 
 app.use(cors());
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'development') {
   app.use(morgan('combined'));
 }
 app.use(express.json());
