@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import * as actions from '../actions';
 
 import { Line } from 'react-chartjs-2';
+import Loader from './partials/Loader';
 
 class Stats extends Component {
   state = {
@@ -15,14 +16,17 @@ class Stats extends Component {
           label: '',
           backgroundColor: 'rgb(56, 178, 172)',
           borderColor: 'rgb(56, 178, 172)',
-          data: []
-        }
-      ]
-    }
+          data: [],
+        },
+      ],
+    },
+    loading: false,
   };
 
   async componentDidMount() {
+    this.setState({ loading: true });
     await this.fetchData();
+    this.setState({ loading: false });
   }
 
   async componentDidUpdate(prevProps, prevState) {
@@ -33,29 +37,31 @@ class Stats extends Component {
   fetchData = async () => {
     await this.props.getStats(this.state.groupBy);
     if (this.props.stats.length) {
-      const labelsValue = this.props.stats.map(el => el.group_by);
-      const countValue = this.props.stats.map(el => el.count * 1);
+      const labelsValue = this.props.stats.map((el) => el.group_by);
+      const countValue = this.props.stats.map((el) => el.count * 1);
 
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         chartData: {
           ...prevState.chartData,
           labels: labelsValue,
-          datasets: prevState.chartData.datasets.map(el => ({
+          datasets: prevState.chartData.datasets.map((el) => ({
             ...el,
             label: `Based on ${this.state.groupBy}`,
-            data: countValue
-          }))
-        }
+            data: countValue,
+          })),
+        },
       }));
     }
   };
 
-  handleSelectChange = event => {
+  handleSelectChange = (event) => {
     this.setState({ groupBy: event.target.value });
   };
 
   render() {
     if (this.props.auth === false) return <Redirect to="/login" />;
+
+    if (this.state.loading) return <Loader />;
 
     return (
       <div className="text-align-center mt-10">

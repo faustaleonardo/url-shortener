@@ -6,6 +6,8 @@ export default (state = null, action) => {
       return payload || false;
     case 'login':
       return payload || false;
+    case 'signup':
+      return payload || false;
     default:
       return state;
   }

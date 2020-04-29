@@ -2,16 +2,23 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+
 import showAlert from '../utils/showAlert';
+import Loader from './partials/Loader';
 
 class Signup extends Component {
-  state = { username: '', password: '', passwordConfirmation: '' };
+  state = {
+    username: '',
+    password: '',
+    passwordConfirmation: '',
+    loading: false,
+  };
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handleSubmit = async event => {
+  handleSubmit = async (event) => {
     event.preventDefault();
     if (
       !this.state.username ||
@@ -27,21 +34,26 @@ class Signup extends Component {
       return;
     }
 
+    this.setState({ loading: true });
     await this.props.signup(this.state);
+    this.setState({ loading: false });
 
     if (this.props.error) {
       showAlert('error', 'Oops...', this.props.error);
+      this.setState({ password: '', passwordConfirmation: '' });
       this.props.clearError();
       return;
     }
 
-    window.location.href = '/';
+    this.props.history.push('/');
   };
 
   render() {
     if (this.props.auth !== false && this.props.auth !== undefined) {
       return <Redirect to="/" />;
     }
+
+    if (this.state.loading) return <Loader />;
 
     return (
       <div className="w-full max-w-xs center-vh">

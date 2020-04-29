@@ -12,8 +12,10 @@ import Track from './Track';
 import Stats from './Stats';
 
 class App extends Component {
-  componentDidMount() {
-    this.props.fetchUser();
+  state = { loading: false };
+
+  async componentDidMount() {
+    await this.props.fetchUser();
   }
 
   render() {

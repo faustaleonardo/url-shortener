@@ -2,16 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import * as actions from '../actions';
+
 import showAlert from '../utils/showAlert';
+import Loader from './partials/Loader';
 
 class Login extends Component {
-  state = { username: '', password: '' };
+  state = { username: '', password: '', loading: false };
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handleSubmit = async event => {
+  handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!this.state.username || !this.state.password) {
@@ -19,9 +21,13 @@ class Login extends Component {
       return;
     }
 
+    this.setState({ loading: true });
     await this.props.login(this.state);
+    this.setState({ loading: false });
+
     if (this.props.auth === false) {
       showAlert('error', 'Oops...', 'Your username or password is wrong!');
+      this.setState({ password: '' });
       return;
     }
 
@@ -32,6 +38,8 @@ class Login extends Component {
     if (this.props.auth !== false && this.props.auth !== undefined) {
       return <Redirect to="/" />;
     }
+
+    if (this.state.loading) return <Loader />;
 
     return (
       <div className="w-full max-w-xs center-vh">

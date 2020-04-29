@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import showAlert from '../utils/showAlert';
+import Loader from './partials/Loader';
 
 class Landing extends Component {
-  state = { url: '', edit: false, customUrlCode: '' };
+  state = { url: '', edit: false, customUrlCode: '', loading: false };
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
@@ -14,7 +15,7 @@ class Landing extends Component {
     this.setState({ url: '' });
   };
 
-  handleSubmit = async event => {
+  handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!this.state.url) {
@@ -22,7 +23,9 @@ class Landing extends Component {
       return;
     }
 
+    this.setState({ loading: true });
     await this.props.postUrl(this.state);
+    this.setState({ loading: false });
 
     if (this.props.error) {
       showAlert('error', 'Oops...', this.props.error);
@@ -36,11 +39,11 @@ class Landing extends Component {
   handleEdit = () => {
     this.setState({
       edit: !this.state.edit,
-      customUrlCode: this.props.url.urlCode
+      customUrlCode: this.props.url.urlCode,
     });
   };
 
-  handleSubmitUrl = async event => {
+  handleSubmitUrl = async (event) => {
     event.preventDefault();
 
     if (!this.state.customUrlCode) {
@@ -48,9 +51,11 @@ class Landing extends Component {
       return;
     }
 
+    this.setState({ loading: true });
     await this.props.patchUrl(this.props.url.id, {
-      customUrlCode: this.state.customUrlCode
+      customUrlCode: this.state.customUrlCode,
     });
+    this.setState({ loading: false });
 
     this.handleEdit();
   };
@@ -118,6 +123,8 @@ class Landing extends Component {
   }
 
   render() {
+    if (this.state.loading) return <Loader />;
+
     return (
       <div className="landing-section center-vh">
         <form onSubmit={this.handleSubmit}>
