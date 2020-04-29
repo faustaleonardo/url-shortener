@@ -14,7 +14,9 @@ require('dotenv').config();
 require('./services/passport');
 
 app.use(cors());
-app.use(morgan('combined'));
+if (process.env.NODE_ENV !== 'production') {
+  app.use(morgan('combined'));
+}
 app.use(express.json());
 app.use(expressIp().getIpInfoMiddleware);
 app.use(
